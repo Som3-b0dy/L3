@@ -22,16 +22,17 @@ echo "UPTIME = $(uptime -p)"
 sys_uptime_sec=$(awk '{print $1}' /proc/uptime)
 echo "UPTIME_SEC = $sys_uptime_sec"
 
-ip_1=$(ip a | grep -A 2 BROADCAST,MULTICAST,UP,LOWER_UP | tail -n 1 | grep --color=never -oP '(?<=inet )[^b]*')
+ip_1=$(ifconfig | grep -A 1 UP,BROADCAST,RUNNING,MULTICAST | tail -n 1 | grep --color=never -oP '(?<=inet )[^n]*')
 echo "IP = $ip_1"
 
-netmask=$(ipcalc $ip_1 | grep Netmask | awk '{print $2}')
+netmask=$(ifconfig | grep -A 2 UP,BROADCAST,RUNNING,MULTICAST | grep --color=never -oP '(?<=netmask )[^b]*')
 echo "MASK = $netmask"
 
 gateway=$(ip r | grep --color=never -oP '(?<=via )[^dev]*')
 echo "GATEWAY = $gateway"
 
-ram_total=$(free --mega | awk 'FNR == 2 {printf $2}')
+# ram_total=$(free --mega | awk 'FNR == 2 {printf $2}')
+ram_total=555
 if [ "$ram_total" -lt 1000 ];then
     ram_total=$(printf "%04d" "$ram_total")
 fi

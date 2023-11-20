@@ -32,5 +32,5 @@ else
             fi
         fi
     done
-    source process.sh "$@"
+    ./process.sh "$@"
 fi

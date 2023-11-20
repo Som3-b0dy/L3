@@ -15,10 +15,18 @@ if [ -z "$column2_font_color" ]; then
     column2_font_color=1
 fi
 
+
+if ! [[ "$column1_background" =~ ^[1-6]$ ]] || ! [[  "$column1_font_color" =~ ^[1-6]$ ]] \
+|| ! [[ "$column2_background" =~ ^[1-6]$ ]] || ! [[ "$column2_font_color" =~ ^[1-6]$  ]];then
+    echo "Invalid input"
+    exit 2
+fi
+
 if [ "$column1_background" -eq "$column1_font_color" ] || [ "$column2_background" -eq "$column2_font_color" ];then
     echo "Incorrect values"
     exit 1
 fi
+
 
 font_colors=("\e[0m" "\e[37m" "\e[31m" "\e[32m" "\e[34m" "\e[35m" "\e[30m")
 background_colors=("\e[0m" "\e[47m" "\e[41m" "\e[42m" "\e[44m" "\e[45m" "\e[40m")
